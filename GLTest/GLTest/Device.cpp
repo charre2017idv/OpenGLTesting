@@ -1,6 +1,7 @@
 #include "Device.h"
 #include "VertexShader.h"
 #include "InputLayout.h"
+#include "IndexBuffer.h"
 
 Device::Device()
 {
@@ -20,7 +21,7 @@ void Device::CreateBuffer(VertexBuffer & _VertexBuffer)
   );
   glBindBuffer
   (
-    GL_ARRAY_BUFFER, 
+    _VertexBuffer.getDescriptor().BindFlag,
     _VertexBuffer.getInterface().ID
   );
   glBufferData
@@ -29,6 +30,27 @@ void Device::CreateBuffer(VertexBuffer & _VertexBuffer)
     _VertexBuffer.getDescriptor().DataSize,
     _VertexBuffer.getDescriptor().Data, 
     _VertexBuffer.getDescriptor().Usage
+  );
+}
+
+void Device::CreateBuffer(IndexBuffer & _IndexBuffer)
+{
+  glGenBuffers
+  (
+    1,
+    &_IndexBuffer.getInterface().ID
+  );
+  glBindBuffer
+  (
+    _IndexBuffer.getDescriptor().BindFlag,
+    _IndexBuffer.getInterface().ID
+  );
+  glBufferData
+  (
+    _IndexBuffer.getDescriptor().BindFlag,
+    _IndexBuffer.getDescriptor().DataSize,
+    _IndexBuffer.getDescriptor().Data,
+    _IndexBuffer.getDescriptor().Usage
   );
 }
 

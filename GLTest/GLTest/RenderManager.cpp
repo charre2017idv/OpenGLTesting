@@ -1,7 +1,7 @@
 #include "RenderManager.h"
 #include "VertexShader.h"
 #include "InputLayout.h"
-
+#include "IndexBuffer.h"
 RenderManager::RenderManager()
 {
 }
@@ -19,6 +19,11 @@ void RenderManager::onPrepare()
 void RenderManager::CreateBuffer(VertexBuffer & _VertexBuffer)
 {
   m_Device.CreateBuffer(_VertexBuffer);
+}
+
+void RenderManager::CreateBuffer(IndexBuffer & _IndexBuffer)
+{
+  m_Device.CreateBuffer(_IndexBuffer);
 }
 
 void RenderManager::CreateInputLayout(InputLayout & _InputLayout)

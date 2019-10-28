@@ -13,7 +13,7 @@ DeviceContext::~DeviceContext()
 
 void DeviceContext::DrawIndexed(unsigned int _IndexCount, unsigned int _StartIndexLocation)
 {
-  glDrawArrays(GL_TRIANGLES, _StartIndexLocation, _IndexCount);
+  glDrawElements(GL_TRIANGLES, _IndexCount, GL_UNSIGNED_INT, nullptr);
 }
 
 void DeviceContext::ClearRenderTargetView(float _ColorRGBA[4])

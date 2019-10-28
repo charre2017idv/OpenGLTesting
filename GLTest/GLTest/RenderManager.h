@@ -11,7 +11,7 @@
  */
 class VertexBuffer;
 class InputLayout;
-
+class IndexBuffer;
 /**
  * @brief : 
  */
@@ -41,8 +41,16 @@ public:
     */
   void CreateBuffer(VertexBuffer & _VertexBuffer);
   /**
-   * @brief : 
-   */
+  * @brief  :
+  * @param  :
+  * @bug    :
+  */
+  void CreateBuffer(IndexBuffer & _IndexBuffer);
+  /**
+    * @brief  : 
+    * @param  : 
+    * @bug    : 
+    */
   void CreateInputLayout(InputLayout & _InputLayout);
   /**
     * @brief  : 

@@ -2,17 +2,20 @@
 #include "RenderManager.h"
 #include "VertexShader.h"
 #include "InputLayout.h"
+#include "IndexBuffer.h"
 #include "Window.h"
 #include "Shader.h"
 #include "Swapchain.h"
 // Global Objects
 VertexBuffer VBO;
 InputLayout Input_Layout;
+IndexBuffer IBO;
 Window WindowObj;
 Shader ShaderObj;
 Swapchain SwapchainObj;
 // Global Variables
 float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha   
+int numIndices;
 // Functions
 void Render();
 void Draw();
@@ -48,17 +51,24 @@ int main(void)
     //mfOutputLOG("Tutorial07", "glewInit()", "Glew cant Initializated.");
   }
 
-  float Positions[6] = {
+  float Positions[] = {
  -0.5f, -0.5f,
-  0.0f,  0.5f,
-  0.5f, -0.5f
+  0.5f, -0.5f,
+  0.5f,  0.5f,
+ -0.5f,  0.5f
   };
+
+  unsigned int Indices[] = {
+    0, 1, 2,
+    2, 3, 0
+  };
+  numIndices = 6;
   /**
    * @brief : Set Vertex Buffer
    */
   VertexBufferDesc VBO_Desc;
   VBO_Desc.BindFlag = GL_ARRAY_BUFFER;
-  VBO_Desc.DataSize = 6 * sizeof(float);
+  VBO_Desc.DataSize = 6 * 2 * sizeof(float);
   VBO_Desc.Data = Positions;
   VBO_Desc.Usage = GL_STATIC_DRAW;
   VBO.Init(VBO_Desc);
@@ -76,7 +86,13 @@ int main(void)
   Input_LayoutDesc.Pointer = 0;
   Input_Layout.Init(Input_LayoutDesc);
 
-  VBO.Unbind();
+  IndexBufferDesc IBO_Desc;
+  IBO_Desc.BindFlag = GL_ELEMENT_ARRAY_BUFFER;
+  IBO_Desc.DataSize = 6 * sizeof(unsigned int);
+  IBO_Desc.Data = Indices;
+  IBO_Desc.Usage = GL_STATIC_DRAW;
+  IBO.Init(IBO_Desc);
+
   /**
    * @brief : Set Vertex and Pixel Shader   
    */
@@ -107,5 +123,5 @@ void Render()
 
 void Draw()
 {
-  RenderManager::getSingleton().DrawIndexed(3, 0);
+  RenderManager::getSingleton().DrawIndexed(numIndices, 0);  
 }
