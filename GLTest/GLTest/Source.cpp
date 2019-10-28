@@ -63,10 +63,10 @@ int main(void)
   VBO_Desc.Usage = GL_STATIC_DRAW;
   VBO.Init(VBO_Desc);
 
+  glEnableVertexAttribArray(0);
   /**
    * @brief : Set Input Layout
    */
-  glEnableVertexAttribArray(0);
   InputLayoutDesc Input_LayoutDesc;
   Input_LayoutDesc.ShaderIndex = 0;
   Input_LayoutDesc.Size = 2;
@@ -80,27 +80,8 @@ int main(void)
   /**
    * @brief : Set Vertex and Pixel Shader   
    */
-  string VS =
-    "#version 330 core\n"
-    "\n"
-    "layout(location = 0) in vec4 position;\n"
-    "\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = position;\n"
-    "}\n";
-
-  string PS =
-    "#version 330 core\n"
-    "\n"
-    "layout(location = 0) out vec4 albedo;\n"
-    "\n"
-    "void main()\n"
-    "{\n"
-    "   albedo = vec4( 1.0, 1.0, 0.0, 1.0 );\n"
-    "}\n";
-
-  unsigned int shader = ShaderObj.CreateShader(VS, PS);
+  ShaderSources source = ShaderObj.ParseShader("BasicShader.fx");
+  unsigned int shader = ShaderObj.CreateShader(source.VertexSource, source.FragmentSource);
   glUseProgram(shader);
 
   /* Loop until the user closes the window */

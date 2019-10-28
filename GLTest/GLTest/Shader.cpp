@@ -53,3 +53,40 @@ unsigned int Shader::CompileShaderFromFile(unsigned int _Type, const string & _S
 
   return id;
 }
+
+ShaderSources Shader::ParseShader(const string & filepath)
+{
+  ifstream stream(filepath);
+
+  enum class ShaderType
+  {
+    NONE = -1, VERTEX = 0, FRAGMENT = 1
+  };
+
+  ShaderType type = ShaderType::NONE;
+  string line;
+  stringstream ss[2];
+
+  while (getline(stream, line))
+  {
+    if (line.find("#shader") != string::npos)
+    {
+      if (line.find("vertex") != string::npos)
+      {
+        // Set Mode to vertex
+        type = ShaderType::VERTEX;
+      }
+      else if (line.find("pixel") != string::npos)
+      {
+        // Set Mode to vertex
+        type = ShaderType::FRAGMENT;
+      }
+    }
+    else
+    {
+      ss[(int)type] << line << '\n';
+    }
+  }
+
+  return { ss[0].str(), ss[1].str() };
+}
